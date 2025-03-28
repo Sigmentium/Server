@@ -95,6 +95,19 @@ const server = http.createServer((req, res) => {
             }));
         });
     }
+
+    if (req.url === '/test' && req.method === 'POST') {
+        let body = '';
+
+        req.on('data', chunk => {
+            body += chunk;
+        });
+
+        req.on('end', () => {
+            res.writeHead(200, {'Content-Type':'text/plain'});
+            res.end('Сосал?');
+        });
+    }
 });
 
 server.listen(port, '0.0.0.0', () => {
