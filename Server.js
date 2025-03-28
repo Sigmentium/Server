@@ -2,19 +2,19 @@ const http = require('http');
 
 const port = 1000;
 
-let Data = GetData();
+// let Data = GetData();
 
-function SaveData(data) {
-    fs.writeFileSync('Data.json', JSON.stringify(data, null, 2), 'utf8');
-}
+// function SaveData(data) {
+//     fs.writeFileSync('Data.json', JSON.stringify(data, null, 2), 'utf8');
+// }
 
-function GetData() {
-    if (fs.existsSync('Data.json')) {
-        const data = fs.readFileSync('Data.json', 'utf8');
-        return JSON.parse(data);
-    }
-    return {};
-}
+// function GetData() {
+//     if (fs.existsSync('Data.json')) {
+//         const data = fs.readFileSync('Data.json', 'utf8');
+//         return JSON.parse(data);
+//     }
+//     return {};
+// }
 
 function GenerateId(length) {
     let result = '';
@@ -37,64 +37,64 @@ const server = http.createServer((req, res) => {
     }
 
     // Log
-    if (req.url === '/api/signin' && req.method === 'POST') {
-        let body = '';
+    // if (req.url === '/api/signin' && req.method === 'POST') {
+    //     let body = '';
 
-        req.on('data', chunk => {
-            body += chunk;
-        });
+    //     req.on('data', chunk => {
+    //         body += chunk;
+    //     });
 
-        req.on('end', () => {
-            const { login, password } = JSON.parse(body);
+    //     req.on('end', () => {
+    //         const { login, password } = JSON.parse(body);
 
-            if (!Data[login]) {
-                res.writeHead(401, {'Content-Type':'text/plain'});
-                res.end('401 Unauthorized');
-            }
-            else {
-                if (Data[login].password === password) {
-                    res.writeHead(200, {'Content-Type':'application/json'});
-                    res.end(JSON.stringify({
-                        id: Data[login].id,
-                        login: login,
-                        password: password
-                    }));
-                }
-                else {
-                    res.writeHead(401, {'Content-Type':'text/plain'});
-                    res.end('401 Unauthorized');
-                }
-            }
-            return;
-        });
-        return;
-    }
+    //         if (!Data[login]) {
+    //             res.writeHead(401, {'Content-Type':'text/plain'});
+    //             res.end('401 Unauthorized');
+    //         }
+    //         else {
+    //             if (Data[login].password === password) {
+    //                 res.writeHead(200, {'Content-Type':'application/json'});
+    //                 res.end(JSON.stringify({
+    //                     id: Data[login].id,
+    //                     login: login,
+    //                     password: password
+    //                 }));
+    //             }
+    //             else {
+    //                 res.writeHead(401, {'Content-Type':'text/plain'});
+    //                 res.end('401 Unauthorized');
+    //             }
+    //         }
+    //         return;
+    //     });
+    //     return;
+    // }
 
-    if (req.url === '/api/signup' && req.method === 'POST') {
-        let body = '';
+    // if (req.url === '/api/signup' && req.method === 'POST') {
+    //     let body = '';
 
-        req.on('data', chunk => {
-            body += chunk;
-        });
+    //     req.on('data', chunk => {
+    //         body += chunk;
+    //     });
 
-        req.on('end', () => {
-            const { login, password } = JSON.parse(body);
-            const id = GenerateId(6);
+    //     req.on('end', () => {
+    //         const { login, password } = JSON.parse(body);
+    //         const id = GenerateId(6);
 
-            Data[login] = {
-                id: id,
-                password: password
-            };
-            SaveData(Data);
+    //         Data[login] = {
+    //             id: id,
+    //             password: password
+    //         };
+    //         SaveData(Data);
 
-            res.writeHead(200, {'Content-Type':'application/json'});
-            res.end(JSON.stringify({
-                id: id,
-                login: login,
-                password: password
-            }));
-        });
-    }
+    //         res.writeHead(200, {'Content-Type':'application/json'});
+    //         res.end(JSON.stringify({
+    //             id: id,
+    //             login: login,
+    //             password: password
+    //         }));
+    //     });
+    // }
 
     if (req.url === '/test' && req.method === 'POST') {
         let body = '';
