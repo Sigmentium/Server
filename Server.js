@@ -110,6 +110,6 @@ const server = http.createServer((req, res) => {
     }
 });
 
-server.listen(port, '0.0.0.0', () => {
+server.listen(port, '18.156.158.53', () => {
     console.log('> Succesful start');
 });
